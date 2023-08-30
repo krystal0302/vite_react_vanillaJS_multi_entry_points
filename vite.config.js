@@ -42,8 +42,9 @@ export default defineConfig( ({ command, mode }) => {
       outDir: OUTPUT_DIR,
       rollupOptions: {
         input: {
-          test: resolve(ROOT, 'test.html'),
-          test2: resolve(ROOT, 'test2.html'),
+          dashobard: resolve(ROOT, 'dashobard.html'),
+          visTest: resolve(ROOT, 'visNetworkTest.html'),
+          drawflow: resolve(ROOT, 'drawflowTest.html'),
         }
       }
     },
