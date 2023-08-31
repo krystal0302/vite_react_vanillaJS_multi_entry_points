@@ -38,6 +38,7 @@ export default defineConfig( ({ command, mode }) => {
       port: 4000
     },
     build: {
+      sourcemap: true,
       emptyOutDir: true,
       outDir: OUTPUT_DIR,
       rollupOptions: {
