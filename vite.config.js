@@ -1,6 +1,7 @@
 // vite.config.js
 /** @type {import('vite').UserConfig} */
 
+import fs from 'fs'
 import { resolve } from 'path'
 import 'process'
 import { defineConfig } from 'vite'
@@ -24,6 +25,21 @@ function test() {
   return a
 }
 
+function getInput() {
+  let inputs = {};
+  const files = fs.readdirSync(ROOT);
+  const htmlFiles = files.filter(file => file.endsWith('.html'));
+    htmlFiles.forEach(file => {
+      const inputKey = file.replace('.html', '');
+      console.log(inputKey);
+      inputs[inputKey] = resolve(ROOT, file);
+  });
+
+  console.log(inputs)
+
+  return inputs;
+}
+
 export default defineConfig( ({ command, mode }) => {
   return {
     root: ROOT,
@@ -35,18 +51,20 @@ export default defineConfig( ({ command, mode }) => {
       },
     },
     server: {
-      port: 4000
+      port: 4050,
+      open: '/web_gl_test.html'
     },
     build: {
       sourcemap: true,
       emptyOutDir: true,
       outDir: OUTPUT_DIR,
       rollupOptions: {
-        input: {
-          dashobard: resolve(ROOT, 'dashobard.html'),
-          visTest: resolve(ROOT, 'visNetworkTest.html'),
-          drawflow: resolve(ROOT, 'drawflowTest.html'),
-        }
+        input: getInput()
+        // {
+        //   dashobard: resolve(ROOT, 'dashobard.html'),
+        //   visTest: resolve(ROOT, 'visNetworkTest.html'),
+        //   drawflow: resolve(ROOT, 'drawflowTest.html'),
+        // }
       }
     },
     plugins: [react()],
